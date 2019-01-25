@@ -8,6 +8,8 @@ namespace SerialiserBenchmarks
         {
             BenchmarkRunner.Run<SerialisationBenchmark<SimpleObject>>();
             BenchmarkRunner.Run<SerialisationBenchmark<ComplexObject>>();
+            BenchmarkRunner.Run<DeserialisationBenchmark<SimpleObject>>();
+            BenchmarkRunner.Run<DeserialisationBenchmark<ComplexObject>>();
         }
     }
 }

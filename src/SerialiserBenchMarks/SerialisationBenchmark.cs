@@ -2,10 +2,6 @@ using System.IO;
 using System.Text;
 using AutoFixture;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Columns;
-using BenchmarkDotNet.Configs;
-using BenchmarkDotNet.Jobs;
-using MessagePack;
 using MessagePack.Resolvers;
 using MsgPack.Serialization;
 using Newtonsoft.Json;
@@ -15,6 +11,7 @@ using SerializationContext = MsgPack.Serialization.SerializationContext;
 
 namespace SerialiserBenchmarks
 {
+    [ClrJob, CoreJob]
     public class SerialisationBenchmark<T>
     {
         // these need to be static because under real usage they're registered as singleton in DI

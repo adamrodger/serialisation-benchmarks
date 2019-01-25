@@ -3,10 +3,6 @@ using System.IO;
 using System.Text;
 using AutoFixture;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Columns;
-using BenchmarkDotNet.Configs;
-using BenchmarkDotNet.Jobs;
-using MessagePack;
 using MessagePack.Resolvers;
 using MsgPack.Serialization;
 using Newtonsoft.Json;
@@ -16,6 +12,7 @@ using SerializationContext = MsgPack.Serialization.SerializationContext;
 
 namespace SerialiserBenchmarks
 {
+    [ClrJob, CoreJob]
     public class DeserialisationBenchmark<T>
     {
         // these need to be static because under real usage they're registered as singleton in DI
@@ -47,7 +44,7 @@ namespace SerialiserBenchmarks
             this.msgPackArray = arrayContext.GetSerializer<T>().PackSingleObject(this.subject);
             this.msgPackMap = mapContext.GetSerializer<T>().PackSingleObject(this.subject);
             this.json = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(this.subject));
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
                 Serializer.Serialize(ms, this.subject);
                 this.protobufNet = ms.ToArray();
@@ -99,7 +96,7 @@ namespace SerialiserBenchmarks
         [Benchmark]
         public T ProtobufNet()
         {
-            using (MemoryStream ms = new MemoryStream(this.protobufNet))
+            using (var ms = new MemoryStream(this.protobufNet))
             {
                 return Serializer.Deserialize<T>(ms);
             }

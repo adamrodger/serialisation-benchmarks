@@ -6,7 +6,7 @@ using ProtoBuf;
 namespace SerialiserBenchmarks
 {
     [ProtoContract]
-    [MessagePackObject]
+    [MessagePackObject(keyAsPropertyName: true)]
     public class ComplexObject
     {
         [ProtoMember(1)] [Key(0)] public int Id { get; set; }

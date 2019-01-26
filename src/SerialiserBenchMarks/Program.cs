@@ -6,14 +6,8 @@ namespace SerialiserBenchmarks
     {
         static void Main(string[] args)
         {
-            BenchmarkSwitcher.FromTypes(new[]
-            {
-                typeof(SerialisationBenchmark<SimpleObject>),
-                typeof(SerialisationBenchmark<ComplexObject>),
-                typeof(DeserialisationBenchmark<SimpleObject>),
-                typeof(DeserialisationBenchmark<ComplexObject>)
-            })
-            .RunAllJoined();
+            BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).RunAllJoined();
+            new SizeBenchmark().Print();
         }
     }
 }
